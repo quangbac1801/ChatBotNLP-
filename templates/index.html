@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .msg-container {
+      height: 400px;
+      overflow-y: auto;
+    }
+    .right-msg {
+    text-align: right;
+}
+
+  .left-msg {
+      text-align: left;
+  }
+
+  </style>
+</head>
+<body>
+  <section class="container mt-4" style="box-shadow: 2px 2px 5px blue; padding: 0; background-color: rgb(232, 237, 237);">
+    <header class="bg-primary text-white p-2 text-center">
+      <h2>Chatbot</h2>
+    </header>
+    <main class="boxchat p-3 msg-container">
+      <div class="msg">
+          <div ><i class="bi bi-person-circle"></i> Chatbot</div>
+        <div class="d-inline-block py-3 px-4" style="background-color: #cdc5c5b8; border-radius: 5px;">
+          <div class="msg-text">
+            Xin chào, hãy đặt câu hỏi cho tôi!
+          </div>
+        </div>
+      </div>
+    </main>
+    <form class="msg-input">
+      <div class="input-group">
+        <input type="text" class="textInput form-control" placeholder="Hãy nhập câu hỏi vào đây...">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+        <div class="input-group-append">
+          <button type="button" class="micButton btn btn-primary" id="micButton" ><i class="bi bi-mic"></i></button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    const msg_from = document.querySelector('.msg-input')
+    const msg_input = document.querySelector('.textInput')
+    const msg_boxchat = document.querySelector('.boxchat')
+    const mic_btn = document.querySelector('.micButton')
+
+    const BOT_NAME = "ChatBot";
+    const ND_NAME = "You";
+
+    msg_from.addEventListener("submit", event => {
+      event.preventDefault();
+      const msgText = msg_input.value;
+      if (!msgText) return;
+      Message(ND_NAME, "right", msgText);
+      msg_input.value = "";
+      chat_phanhoi(msgText);
+    });
+
+    function Message(name, side, text) {
+      const msgHTML = `
+        <div class="msg ${side}-msg" >
+              <div ><i class="bi bi-person-circle"></i> ${name}</div>
+          <div class="d-inline-block py-3 px-4" style="background-color: #cdc5c5b8; border-radius: 5px;">
+            <div class="msg-text">
+              ${text}
+            </div>
+          </div>
+        </div>`;
+      msg_boxchat.insertAdjacentHTML("beforeend", msgHTML);
+      msg_boxchat.scrollTop = msg_boxchat.scrollHeight; 
+}
+
+
+    function chat_phanhoi(text) {
+      $.get("/get", { msg: text })
+        .done(function (data) {     
+          const msgText = data;  
+          Message(BOT_NAME, "left", msgText);
+        });
+    }
+
+    mic_btn.addEventListener("click", () => {
+      micButton.innerHTML = '<i class="bi bi-mic-fill"></i>';
+      $.get("/get", { msg: "mic" }).done(function (data) {
+        if (data !== "0") {
+          Message(ND_NAME, "right", data);
+          chat_phanhoi(data);
+        } else {
+          Message(BOT_NAME, "left", "Lỗi khi nhận dữ liệu âm thanh từ microphone!");
+        }
+        micButton.innerHTML = '<i class="bi bi-mic"></i></i>';
+      });
+    });
+  </script>
+</body>
+</html>
