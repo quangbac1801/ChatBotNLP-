@@ -6,6 +6,8 @@ import random
 import speech_recognition as sr
 from flask import Flask, render_template, request
 import tensorflow as tf
+import re
+import unicodedata
 
 ds_words = pickle.load(open('texts.pkl','rb'))
 ds_nhan = pickle.load(open('labels.pkl','rb'))
@@ -15,7 +17,9 @@ model = tf.keras.models.load_model('model.keras', compile=False)
 data = json.loads(open('data.json', encoding='utf-8').read())
 
 def xuly_dulieu(text):
-    xl_word = nltk.word_tokenize(text)
+    n = ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
+    dc=re.sub(r'[^\w\s]', ' ', n)
+    xl_word = nltk.word_tokenize(dc)
     xl_word = [word.lower() for word in xl_word]
     return xl_word
 

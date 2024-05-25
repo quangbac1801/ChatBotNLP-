@@ -7,18 +7,18 @@
         },
         {
             "tag": "chaohoi",
-            "patterns": ["Xin chào", "Bạn khỏe không", "Có ai ở đó không?", "Xin chào", "Hello","Hi", "chào bạn", "Chào buổi sáng","xin chao","cho tôi hỏi", "tôi muốn bạn giúp cái này"],
+            "patterns": ["Xin chào", "Bạn khỏe không", "Có ai ở đó không?", "Hello","Hi", "chào bạn", "Chào buổi sáng","cho tôi hỏi", "tôi muốn bạn giúp cái này"],
             "responses": ["Xin chào, tôi có thể giúp gì cho bạn!", "Rất vui được gặp bạn! Bạn muốn tôi giúp gì?", "Xin chào, bạn cần tôi giúp gì?","Xin chào, chúc bạn một ngày tốt lành. Tôi có thể giúp gì cho bạn"]
         },
        
         {
             "tag": "tambiet",
-            "patterns": ["Tạm biệt", "Hẹn gặp lại sau", "Tam biet", "Rất vui khi trò chuyện với bạn, tạm biệt", "Hẹn bạn lần sau nhé"],
+            "patterns": ["Tạm biệt", "Hẹn gặp lại sau", "Rất vui khi trò chuyện với bạn, tạm biệt", "Hẹn bạn lần sau nhé"],
             "responses": ["Hẹn gặp lại bạn!", "Chúc bạn một ngày tốt lành", "Tạm biệt! Hãy quay lại sớm nhé."]
         },
         {
             "tag": "camon",
-            "patterns": ["Cảm ơn", "Cảm ơn bạn", "Rất hữu ích", "Tuyệt vời, cảm ơn", "Cảm ơn đã giúp đỡ tôi"],
+            "patterns": ["Cảm ơn", "Cảm ơn bạn", "Rất hữu ích", "Tuyệt vời", "Cảm ơn đã giúp đỡ tôi"],
             "responses": ["Rất vui được giúp bạn!", "Không có gì! Bất cứ lúc nào bạn cần!", "Tôi luôn sẵn sàng giúp đỡ!"]
         },
         {

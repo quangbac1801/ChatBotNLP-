@@ -6,6 +6,8 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
 import random
+import re
+import unicodedata
 
 with open('app/data.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
@@ -13,18 +15,18 @@ with open('app/data.json', 'r', encoding='utf-8') as file:
 ds_tu = []
 ds_nhan = []
 documents = []
-daucau = ['?', '!', '.', ',', ':']
 
 
 for d in data['intents']:
     for p in d['patterns']:
-        w = nltk.word_tokenize(p)
+        n = ''.join(c for c in unicodedata.normalize('NFD', p) if unicodedata.category(c) != 'Mn')
+        n = re.sub(r'[^\w\s]', ' ', n.lower())
+        w = nltk.word_tokenize(n)
         ds_tu.extend(w)
         documents.append((w, d['tag']))
         if d['tag'] not in ds_nhan:
             ds_nhan.append(d['tag'])
 
-ds_tu = [w.lower() for w in ds_tu if w not in daucau]
 ds_tu = sorted(list(set(ds_tu)))
 ds_nhan = sorted(list(set(ds_nhan)))
 
